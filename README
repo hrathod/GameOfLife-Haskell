@@ -1,0 +1,11 @@
+
+A simple implementation of Conway's Game of Life in Haskell.
+Tested with GHC on Linux.  To compile, run
+
+ghc -o gol Main.hs
+
+To run the game, provide the width, height, and the initial living cells:
+
+./gol 6 6 "[(2,2),(3,2),(2,3),(4,5),(5,4),(5,5)]"
+
+Notice that the living cells are quoted.  Feedback welcome.
