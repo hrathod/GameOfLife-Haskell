@@ -5,6 +5,7 @@ import qualified Data.Map as M
 import qualified Data.Maybe as N
 import qualified System.Environment as E
 import qualified System.IO as S
+import qualified Control.Monad as C
 
 type Point = (Integer, Integer)
 data CellState = Alive | Dead
@@ -68,10 +69,7 @@ eventLoop world = do
   putStr "Enter 'q' to quit, or Enter for next step: "
   S.hFlush S.stdout
   c <- getLine
-  if c /= "q" then
-    eventLoop $ updateWorld world
-  else
-    return ()
+  C.when (c /= "q") $ eventLoop $ updateWorld world
 
 usage :: IO ()
 usage = do putStrLn "Please provide width height init"
@@ -81,7 +79,7 @@ main :: IO ()
 main = do
   args <- E.getArgs
   if length args == 3 then
-    let w = read (args !! 0) :: Integer
+    let w = read $ head args :: Integer
         h = read (args !! 1) :: Integer
         c = read (args !! 2) :: [(Integer,Integer)] in
     eventLoop $ createWorld w h c
